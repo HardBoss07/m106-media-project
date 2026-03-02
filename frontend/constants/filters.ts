@@ -1,10 +1,10 @@
 export const FILTER_CATEGORIES = [
   {
-    title: 'Media Type',
+    title: 'Medientyp',
     options: ['Foto', 'Video', 'Audio'],
   },
   {
-    title: 'Category',
+    title: 'Kategorie',
     options: ['Heilkunde', 'Natur', 'Kräuter', 'Kopfschmerzen'],
   },
 ];

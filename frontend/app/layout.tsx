@@ -11,8 +11,8 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
-  title: "MYLIGHTS - Professional Media Portal",
-  description: "Browse images, video, and audio effortlessly.",
+  title: "MediaHub - Professionelles Medienportal",
+  description: "Bilder, Videos und Audioaufnahmen mühelos durchsuchen.",
 };
 
 export default function RootLayout({
@@ -21,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="de">
       <body
         className={`${lato.variable} font-sans antialiased bg-background text-primary-text min-h-screen flex flex-col`}
       >

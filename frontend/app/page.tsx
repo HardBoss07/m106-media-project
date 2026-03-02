@@ -5,15 +5,15 @@ import { MOCK_MEDIA } from '@/constants/mockData';
 export default function Home() {
   return (
     <div className="flex flex-1 w-full max-w-[1920px] mx-auto overflow-hidden">
-      {/* Left Sidebar (Filter) */}
+      {/* Linke Seitenleiste (Filter) */}
       <Sidebar />
 
-      {/* Center Gallery (Main Grid) */}
+      {/* Galerie (Hauptbereich) */}
       <section className="layout-main-content">
         <div className="mb-6 flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-primary-white">Discover Media</h1>
+          <h1 className="text-2xl font-bold text-primary-white">Medien entdecken</h1>
           <div className="text-xs text-primary-text/40">
-            {MOCK_MEDIA.length} items found
+            {MOCK_MEDIA.length} Einträge gefunden
           </div>
         </div>
         
@@ -24,12 +24,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Right Sidebar (Section) */}
+      {/* Rechte Seitenleiste (Informationen) */}
       <aside className="layout-sidebar-right">
         <div className="placeholder-box">
-          <h2 className="text-lg font-semibold text-primary-white mb-2">Information/Actions</h2>
+          <h2 className="text-lg font-semibold text-primary-white mb-2">Informationen/Aktionen</h2>
           <p className="text-sm text-primary-text/60 leading-relaxed">
-            Select an item from the gallery to view more detailed metadata and available actions.
+            Wähle ein Element aus der Galerie aus, um detaillierte Metadaten und verfügbare Aktionen anzuzeigen.
           </p>
           <div className="mt-6 w-full space-y-3">
             <div className="h-10 w-full bg-primary-brand/20 border border-primary-brand/30 rounded-lg animate-pulse" />

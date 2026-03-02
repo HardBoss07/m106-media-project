@@ -9,7 +9,7 @@ const SearchBar = () => {
       <input
         type="search"
         className="search-input"
-        placeholder="Search for media..."
+        placeholder="Medien suchen..."
         required
       />
     </div>

@@ -19,7 +19,7 @@
 @layer components {
   /* Layout Classes */
   .layout-nav {
-    @apply sticky top-0 z-50 flex items-center justify-between w-full h-16 px-6 border-b bg-primary-black border-primary-text/10;
+    @apply sticky top-0 z-50 flex items-center justify-between w-full h-16 px-6 border-b bg-background border-primary-text/10;
   }
 
   .layout-sidebar {
@@ -31,21 +31,21 @@
   }
 
   .layout-main-content {
-    @apply flex-1 min-w-0 p-6 overflow-y-auto bg-primary-black/20;
+    @apply flex-1 min-w-0 p-6 overflow-y-auto bg-background/20;
   }
 
   .layout-footer {
-    @apply w-full py-6 mt-12 border-t border-primary-text/10 bg-primary-black;
+    @apply w-full py-6 mt-12 border-t border-primary-text/10 bg-background;
   }
 
   /* Search Bar */
   .search-input {
-    @apply block w-full p-2 pl-10 text-sm border rounded-lg bg-primary-black border-primary-text/20 text-primary-text focus:ring-primary-accent focus:border-primary-accent;
+    @apply block w-full p-2 pl-10 text-sm border rounded-lg bg-background border-primary-text/20 text-primary-text focus:ring-primary-accent focus:border-primary-accent;
   }
 
   /* Media Card */
   .media-card {
-    @apply relative bg-gray-900 rounded-xl overflow-hidden border border-primary-text/5 transition-all duration-300;
+    @apply relative bg-gray-900 rounded-xl overflow-hidden border border-primary-text/5 transition-all duration-300 flex flex-col;
   }
 
   .media-card:hover {
@@ -53,7 +53,7 @@
   }
 
   .media-card-image-container {
-    @apply aspect-video relative overflow-hidden;
+    @apply aspect-video relative overflow-hidden shrink-0;
   }
 
   .media-card-image {
@@ -65,7 +65,7 @@
   }
 
   .media-card-overlay {
-    @apply absolute inset-0 bg-black/40 opacity-0 transition-opacity flex items-center justify-center;
+    @apply absolute inset-0 bg-background/40 opacity-0 transition-opacity flex items-center justify-center;
   }
 
   .media-card:hover .media-card-overlay {
@@ -77,7 +77,7 @@
   }
 
   .media-card-badge {
-    @apply absolute bottom-2 right-2 px-2 py-1 text-[10px] font-bold bg-black/80 text-white rounded;
+    @apply absolute bottom-2 right-2 px-2 py-1 text-[10px] font-bold bg-background/80 text-white rounded;
   }
 
   /* UI Elements */
