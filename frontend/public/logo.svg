@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="360" viewBox="0 0 1400 360" fill="none"
+    role="img" aria-label="MYLIGHTS Media Logo">
+    <defs>
+        <!-- Dezenter Verlauf im Blitz -->
+        <linearGradient id="boltGrad" x1="110" y1="95" x2="260" y2="265"
+            gradientUnits="userSpaceOnUse">
+            <stop stop-color="#FFFFFF"></stop>
+            <stop offset="1" stop-color="#C7D2FF"></stop>
+        </linearGradient>
+
+        <!-- Ultra-subtiler Rand fÃ¼rs Icon-Plate -->
+        <linearGradient id="plateEdge" x1="60" y1="60" x2="300" y2="300"
+            gradientUnits="userSpaceOnUse">
+            <stop stop-color="#FFFFFF" stop-opacity="0.26"></stop>
+            <stop offset="1" stop-color="#FFFFFF" stop-opacity="0.06"></stop>
+        </linearGradient>
+
+        <!-- Weicher Schatten -->
+        <filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000000"
+                flood-opacity="0.35"></feDropShadow>
+        </filter>
+
+        <clipPath id="clip">
+            <rect x="60" y="60" width="240" height="240" rx="72"></rect>
+        </clipPath>
+    </defs>
+
+    <!-- ICON PLATE (dunkel, damit weiss immer sichtbar ist) -->
+    <g filter="url(#softShadow)">
+        <rect x="60" y="60" width="240" height="240" rx="72" fill="#0B0F1A"></rect>
+        <rect x="60" y="60" width="240" height="240" rx="72" fill="none" stroke="url(#plateEdge)"
+            stroke-width="2"></rect>
+    </g>
+
+    <!-- ICON CONTENT -->
+    <g clip-path="url(#clip)">
+        <!-- optional: ganz dezentes Grid -->
+        <path d="M60 140H300M60 220H300M140 60V300M220 60V300" stroke="#FFFFFF"
+            stroke-opacity="0.05" stroke-width="2"></path>
+
+        <!-- DER BLITZ (einfach, ikonisch) -->
+        <path d="M202 88L124 188H186L164 272L262 158H198L202 88Z" fill="url(#boltGrad)"></path>
+    </g>
+
+    <!-- WORDMARK -->
+    <g>
+        <text x="340" y="190"
+            font-family="Poppins, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+            font-size="104" font-weight="600" letter-spacing="1.5" fill="#FFFFFF">
+            MYLIGHTS
+        </text>
+
+        <text x="346" y="252"
+            font-family="Poppins, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+            font-size="34" font-weight="600" letter-spacing="10" fill="#FFFFFF" fill-opacity="0.62">
+            MEDIA
+        </text>
+    </g>
+</svg>

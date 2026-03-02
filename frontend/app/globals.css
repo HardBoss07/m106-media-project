@@ -1,1 +1,111 @@
 @import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-lato), "Inter", "system-ui", "sans-serif";
+  --color-primary-accent: #ff0aef;
+  --color-primary-brand: #ff0a70;
+  --color-primary-text: #d2d2d2;
+  --color-primary-white: #ededed;
+  --color-primary-black: #121212;
+  --color-background: #060B18;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-primary-text;
+  }
+}
+
+@layer components {
+  /* Layout Classes */
+  .layout-nav {
+    @apply sticky top-0 z-50 flex items-center justify-between w-full h-16 px-6 border-b bg-primary-black border-primary-text/10;
+  }
+
+  .layout-sidebar {
+    @apply sticky top-16 h-[calc(100vh-4rem)] w-64 p-6 border-r border-primary-text/10 overflow-y-auto;
+  }
+
+  .layout-sidebar-right {
+    @apply hidden xl:block w-72 p-6 border-l border-primary-text/10 sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto;
+  }
+
+  .layout-main-content {
+    @apply flex-1 min-w-0 p-6 overflow-y-auto bg-primary-black/20;
+  }
+
+  .layout-footer {
+    @apply w-full py-6 mt-12 border-t border-primary-text/10 bg-primary-black;
+  }
+
+  /* Search Bar */
+  .search-input {
+    @apply block w-full p-2 pl-10 text-sm border rounded-lg bg-primary-black border-primary-text/20 text-primary-text focus:ring-primary-accent focus:border-primary-accent;
+  }
+
+  /* Media Card */
+  .media-card {
+    @apply relative bg-gray-900 rounded-xl overflow-hidden border border-primary-text/5 transition-all duration-300;
+  }
+
+  .media-card:hover {
+    @apply border-primary-accent/30;
+  }
+
+  .media-card-image-container {
+    @apply aspect-video relative overflow-hidden;
+  }
+
+  .media-card-image {
+    @apply w-full h-full object-cover transition-transform duration-500;
+  }
+
+  .media-card:hover .media-card-image {
+    @apply scale-105;
+  }
+
+  .media-card-overlay {
+    @apply absolute inset-0 bg-black/40 opacity-0 transition-opacity flex items-center justify-center;
+  }
+
+  .media-card:hover .media-card-overlay {
+    @apply opacity-100;
+  }
+
+  .media-card-icon-wrapper {
+    @apply w-12 h-12 rounded-full bg-primary-accent flex items-center justify-center shadow-lg;
+  }
+
+  .media-card-badge {
+    @apply absolute bottom-2 right-2 px-2 py-1 text-[10px] font-bold bg-black/80 text-white rounded;
+  }
+
+  /* UI Elements */
+  .btn-icon {
+    @apply p-2 transition-colors rounded-full hover:bg-gray-800 text-primary-text;
+  }
+
+  .filter-category-title {
+    @apply text-sm font-semibold tracking-wider uppercase text-primary-white/50;
+  }
+
+  .filter-checkbox-label {
+    @apply flex items-center gap-3 cursor-pointer;
+  }
+
+  .filter-checkbox-label span {
+    @apply text-sm transition-colors text-primary-text;
+  }
+
+  .filter-checkbox-label:hover span {
+    @apply text-primary-white;
+  }
+
+  .filter-checkbox-input {
+    @apply w-4 h-4 rounded border-gray-600 text-primary-accent focus:ring-primary-accent bg-transparent;
+  }
+
+  .placeholder-box {
+    @apply p-6 rounded-xl bg-gray-900 border border-primary-text/5 flex flex-col items-center justify-center text-center;
+  }
+}
