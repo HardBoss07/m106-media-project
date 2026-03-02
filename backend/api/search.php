@@ -16,8 +16,8 @@ $type_map = [
 ];
 $db_type = isset($type_map[$type]) ? $type_map[$type] : '';
 
-// Prepare base SQL
-$sql = "SELECT DISTINCT m.mediaID, m.title, m.description, m.file_path, mt.name as type_name, 
+// Prepare base SQL - Added m.upload_date
+$sql = "SELECT DISTINCT m.mediaID, m.title, m.description, m.file_path, m.upload_date, mt.name as type_name, 
         GROUP_CONCAT(c.name SEPARATOR ' > ') as signature
         FROM media m
         JOIN media_type mt ON m.media_typeID = mt.media_typeID
@@ -84,7 +84,8 @@ if ($stmt) {
             'type' => $row['type_name'],
             'signature' => $row['signature'] ?: '',
             'url' => $row['file_path'],
-            'thumbnail' => $row['file_path'] // Assuming for now, or use placeholder logic
+            'thumbnail' => $row['file_path'],
+            'uploadDate' => $row['upload_date']
         ];
     }
 
