@@ -1,12 +1,21 @@
-import { MOCK_MEDIA } from '@/constants/mockData';
+import { searchMedia } from '@/lib/api-client';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ChevronLeft, Calendar, Tag, Share2, MoreVertical } from 'lucide-react';
 import MediaPlayerControls from '@/components/UI/MediaPlayerControls';
 
-export default async function MediaPage({ params }: { params: { id: string } }) {
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+
+export default async function MediaPage({ params }: PageProps) {
   const { id } = await params;
-  const media = MOCK_MEDIA.find((item) => item.id === id);
+  
+  // Since we don't have a single-item endpoint, we'll use our search results 
+  // and filter for the specific ID. In a real-world app, a dedicated 
+  // detail endpoint like getMediaById.php?id=X would be more efficient.
+  const mediaList = await searchMedia();
+  const media = mediaList.find((item) => item.id === id);
 
   if (!media) {
     notFound();
@@ -21,7 +30,7 @@ export default async function MediaPage({ params }: { params: { id: string } }) 
   return (
     <div className="flex-1 flex flex-col bg-background min-h-0">
       {/* Kopfzeile / Zurück-Button */}
-      <div className="p-4 border-b border-white/5 flex items-center gap-4 bg-background">
+      <div className="p-4 border-b border-white/5 flex items-center gap-4 bg-primary-black/40">
         <Link 
           href="/" 
           className="p-2 rounded-full hover:bg-white/5 transition-colors text-primary-text"
@@ -41,12 +50,28 @@ export default async function MediaPage({ params }: { params: { id: string } }) 
         {/* Player-Bereich */}
         <div className="flex-1 flex flex-col bg-background relative">
           <div className="flex-1 flex items-center justify-center p-4 lg:p-8">
-            <div className="w-full max-w-5xl aspect-video bg-background rounded-lg overflow-hidden shadow-2xl relative group">
-              <img 
-                src={media.thumbnailUrl} 
-                className="w-full h-full object-contain"
-                alt={media.title}
-              />
+            <div className="w-full max-w-5xl aspect-video bg-gray-900 rounded-lg overflow-hidden shadow-2xl relative group">
+              {media.type === 'image' ? (
+                <img 
+                  src={media.url} 
+                  className="w-full h-full object-contain"
+                  alt={media.title}
+                />
+              ) : media.type === 'video' ? (
+                <video 
+                  src={media.url} 
+                  controls 
+                  className="w-full h-full"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-gray-800">
+                  <audio 
+                    src={media.url} 
+                    controls 
+                    className="w-3/4"
+                  />
+                </div>
+              )}
               
               {/* Typ-Anzeige */}
               <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-background/60 backdrop-blur-md border border-white/10 text-xs font-medium text-primary-accent uppercase tracking-widest">
@@ -55,9 +80,9 @@ export default async function MediaPage({ params }: { params: { id: string } }) 
             </div>
           </div>
 
-          {/* Steuerung - Nur für Video/Audio */}
+          {/* Steuerung - Nur für Video/Audio (Mock Controls for visual) */}
           {media.type !== 'image' && (
-            <MediaPlayerControls type={media.type} duration={media.duration} />
+            <MediaPlayerControls type={media.type as any} duration={media.duration} />
           )}
         </div>
 
@@ -80,7 +105,7 @@ export default async function MediaPage({ params }: { params: { id: string } }) 
           <div className="flex flex-wrap gap-4 mb-8">
             <div className="flex items-center gap-2 text-xs text-primary-text/60 bg-white/5 px-3 py-1.5 rounded-full">
               <Tag className="w-3.5 h-3.5 text-primary-brand" />
-              {media.category}
+              {media.signature || 'Ohne Kategorie'}
             </div>
             {media.uploadDate && (
               <div className="flex items-center gap-2 text-xs text-primary-text/60 bg-white/5 px-3 py-1.5 rounded-full">

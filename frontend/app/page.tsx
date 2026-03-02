@@ -1,30 +1,61 @@
 import Sidebar from '@/components/layout/Sidebar';
 import MediaCard from '@/components/UI/MediaCard';
-import { MOCK_MEDIA } from '@/constants/mockData';
+import { searchMedia } from '@/lib/api-client';
 
-export default function Home() {
+interface PageProps {
+  searchParams: Promise<{ q?: string; type?: string }>;
+}
+
+export default async function Home({ searchParams }: PageProps) {
+  // Await searchParams in Next.js 15
+  const params = await searchParams;
+  const query = params.q || '';
+  const type = params.type || '';
+
+  // Fetch real data from PHP Backend
+  const mediaList = await searchMedia(query, type);
+
   return (
     <div className="flex flex-1 w-full max-w-[1920px] mx-auto overflow-hidden">
-      {/* Linke Seitenleiste (Filter) */}
+      {/* Left Sidebar (Filter) */}
       <Sidebar />
 
-      {/* Galerie (Hauptbereich) */}
+      {/* Center Gallery (Main Grid) */}
       <section className="layout-main-content">
         <div className="mb-6 flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-primary-white">Medien entdecken</h1>
+          <div className="space-y-1">
+            <h1 className="text-2xl font-bold text-primary-white">Medien entdecken</h1>
+            {query && (
+              <p className="text-sm text-primary-text/40">
+                Ergebnisse für: <span className="text-primary-accent">"{query}"</span>
+              </p>
+            )}
+          </div>
           <div className="text-xs text-primary-text/40">
-            {MOCK_MEDIA.length} Einträge gefunden
+            {mediaList.length} {mediaList.length === 1 ? 'Eintrag' : 'Einträge'} gefunden
           </div>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {MOCK_MEDIA.map((item) => (
-            <MediaCard key={item.id} media={item} />
-          ))}
-        </div>
+        {mediaList.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {mediaList.map((item) => (
+              <MediaCard key={item.id} media={item} />
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center py-20 text-center">
+            <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4">
+              <span className="text-2xl text-primary-text/20">?</span>
+            </div>
+            <h2 className="text-primary-white font-medium">Keine Medien gefunden</h2>
+            <p className="text-sm text-primary-text/40 mt-1">
+              Versuche es mit anderen Filtern oder einem anderen Suchbegriff.
+            </p>
+          </div>
+        )}
       </section>
 
-      {/* Rechte Seitenleiste (Informationen) */}
+      {/* Right Sidebar (Information) */}
       <aside className="layout-sidebar-right">
         <div className="placeholder-box">
           <h2 className="text-lg font-semibold text-primary-white mb-2">Informationen/Aktionen</h2>
