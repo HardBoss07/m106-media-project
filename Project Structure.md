@@ -16,6 +16,11 @@ m106-media-project/
 │   │   ├── globals.css
 │   │   ├── layout.tsx
 │   │   └── page.tsx
+│   ├── components/
+│   ├── db/
+│   │   └── main.sql
+│   ├── lib/
+│   │   └── api-client.ts
 │   ├── public/
 │   ├── README.md
 │   ├── next.config.ts
