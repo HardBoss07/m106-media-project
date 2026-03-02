@@ -8,20 +8,37 @@ m106-media-project/
 │   │   └── search.php
 │   └── config/
 │       └── db.php
+├── db/
+│   └── main.sql
 ├── docs/
 │   └── index.md
 ├── frontend/
 │   ├── app/
+│   │   ├── media/
+│   │   │   └── [id]/
+│   │   │       └── page.tsx
 │   │   ├── favicon.ico
 │   │   ├── globals.css
 │   │   ├── layout.tsx
 │   │   └── page.tsx
 │   ├── components/
-│   ├── db/
-│   │   └── main.sql
+│   │   ├── UI/
+│   │   │   ├── MediaCard.tsx
+│   │   │   ├── MediaPlayerControls.tsx
+│   │   │   └── SearchBar.tsx
+│   │   └── layout/
+│   │       ├── Footer.tsx
+│   │       ├── Navbar.tsx
+│   │       └── Sidebar.tsx
+│   ├── constants/
+│   │   ├── filters.ts
+│   │   └── mockData.ts
 │   ├── lib/
 │   │   └── api-client.ts
 │   ├── public/
+│   │   └── logo.svg
+│   ├── types/
+│   │   └── media.ts
 │   ├── README.md
 │   ├── next.config.ts
 │   ├── package-lock.json
