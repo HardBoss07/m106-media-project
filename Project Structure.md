@@ -9,7 +9,8 @@ m106-media-project/
 │   └── config/
 │       └── db.php
 ├── db/
-│   └── main.sql
+│   ├── main.sql
+│   └── mock_data.sql
 ├── docs/
 │   └── index.md
 ├── frontend/
@@ -46,6 +47,7 @@ m106-media-project/
 │   ├── postcss.config.mjs
 │   ├── tailwind.config.ts
 │   └── tsconfig.json
+├── Aufgabe.pdf
 ├── LICENSE
 └── Project Structure.md
 ```
