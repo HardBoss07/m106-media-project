@@ -49,5 +49,7 @@ m106-media-project/
 │   └── tsconfig.json
 ├── Aufgabe.pdf
 ├── LICENSE
-└── Project Structure.md
+├── Project Structure.md
+├── deploy.ps1
+└── deploy.sh
 ```
