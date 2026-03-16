@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS media (
     title VARCHAR(150) NOT NULL,
     description TEXT,
     file_path VARCHAR(255) NOT NULL,
+    file_size_kb INT DEFAULT 0,
     upload_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     media_typeID INT NOT NULL,
     FOREIGN KEY (media_typeID)

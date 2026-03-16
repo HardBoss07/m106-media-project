@@ -37,20 +37,20 @@ INSERT INTO category (categoryID, name, parentID) VALUES
 -- 3. MEDIEN DATENSÄTZE
 -- ==========================================================
 -- Bilder
-INSERT INTO media (mediaID, title, description, file_path, upload_date, media_typeID) VALUES
-(1, 'Lavendel im Detail',   'Nahaufnahme von Lavendelblüten für beruhigende Anwendungen.',      'https://picsum.photos/id/237/800/600', NOW(), 1),
-(2, 'Berglandschaft',       'Ein weiter Blick über die Alpen zur Entspannung.',                'https://picsum.photos/id/28/800/600',  NOW(), 1),
-(3, 'Pfefferminz-Blätter',  'Frische Blätter direkt aus dem Heilkräutergarten.',               'https://picsum.photos/id/152/800/600', NOW(), 1);
+INSERT INTO media (mediaID, title, description, file_path, file_size_kb, upload_date, media_typeID) VALUES
+(1, 'Lavendel im Detail',   'Nahaufnahme von Lavendelblüten für beruhigende Anwendungen.',      'https://picsum.photos/id/237/800/600', 150, NOW(), 1),
+(2, 'Berglandschaft',       'Ein weiter Blick über die Alpen zur Entspannung.',                'https://picsum.photos/id/28/800/600',  220, NOW(), 1),
+(3, 'Pfefferminz-Blätter',  'Frische Blätter direkt aus dem Heilkräutergarten.',               'https://picsum.photos/id/152/800/600', 180, NOW(), 1);
 
 -- Videos
-INSERT INTO media (mediaID, title, description, file_path, upload_date, media_typeID) VALUES
-(4, 'Big Buck Bunny',       'Klassischer Open-Source Animationsfilm für Testzwecke.',          'https://www.w3schools.com/html/mov_bbb.mp4', NOW(), 2),
-(5, 'Bären in der Natur',   'Kurzes Video von Bären in ihrem natürlichen Lebensraum.',         'https://www.w3schools.com/html/movie.mp4',   NOW(), 2);
+INSERT INTO media (mediaID, title, description, file_path, file_size_kb, upload_date, media_typeID) VALUES
+(4, 'Big Buck Bunny',       'Klassischer Open-Source Animationsfilm für Testzwecke.',          'https://www.w3schools.com/html/mov_bbb.mp4', 10500, NOW(), 2),
+(5, 'Bären in der Natur',   'Kurzes Video von Bären in ihrem natürlichen Lebensraum.',         'https://www.w3schools.com/html/movie.mp4',   5200, NOW(), 2);
 
 -- Audio Dateien
-INSERT INTO media (mediaID, title, description, file_path, upload_date, media_typeID) VALUES
-(6, 'Pferde-Galopp',        'Audioaufnahme eines galoppierenden Pferdes auf einer Koppel.',    'https://www.w3schools.com/html/horse.mp3', NOW(), 3),
-(7, 'Ambient Waldrauschen', 'Beruhigende Hintergrundgeräusche aus einem Mischwald.',            'https://www.w3schools.com/html/horse.mp3', NOW(), 3);
+INSERT INTO media (mediaID, title, description, file_path, file_size_kb, upload_date, media_typeID) VALUES
+(6, 'Pferde-Galopp',        'Audioaufnahme eines galoppierenden Pferdes auf einer Koppel.',    'https://www.w3schools.com/html/horse.mp3', 800, NOW(), 3),
+(7, 'Ambient Waldrauschen', 'Beruhigende Hintergrundgeräusche aus einem Mischwald.',            'https://www.w3schools.com/html/horse.mp3', 1200, NOW(), 3);
 
 -- ==========================================================
 -- 4. ZUORDNUNG (Media to Categories) für Signatur-Logik

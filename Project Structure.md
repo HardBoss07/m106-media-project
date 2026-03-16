@@ -6,10 +6,12 @@ m106-media-project/
 │   ├── api/
 │   │   ├── auth.php
 │   │   ├── db_test.php
-│   │   └── search.php
+│   │   ├── search.php
+│   │   └── stats.php
 │   └── config/
 │       └── db.php
 ├── db/
+│   ├── backup.sql
 │   ├── main.sql
 │   └── mock_data.sql
 ├── docs/
