@@ -9,15 +9,20 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-lato)", "sans-serif"],
+        outfit: ["Outfit", "sans-serif"],
       },
       colors: {
-        "primary-accent": "#ff0aef",
-        "primary-brand": "#ff0a70",
-        "primary-text": "#d2d2d2",
-        "primary-white": "#ededed",
-        "primary-black": "#121212",
-        background: "#060B18",
+        "bg0": "#04060b",
+        "bg1": "#080d18",
+        "bg2": "#0d1422",
+        "bg3": "#121b2d",
+        "bg4": "#1a2640",
+        "line": "#22304a",
+        "line2": "#2e4062",
+        "text": "#f5f8ff",
+        "text2": "#b7c1d6",
+        "text3": "#7f8aa3",
+        "red": "#ff108a",
       },
     },
   },
