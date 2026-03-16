@@ -5,6 +5,7 @@ m106-media-project/
 ├── backend/
 │   ├── api/
 │   │   ├── auth.php
+│   │   ├── db_test.php
 │   │   └── search.php
 │   └── config/
 │       └── db.php
@@ -12,48 +13,45 @@ m106-media-project/
 │   ├── main.sql
 │   └── mock_data.sql
 ├── docs/
+│   ├── Checkliste.md
 │   └── index.md
-├── electron-app/
-│   └── MyLights/
-│       ├── renderer/
-│       │   ├── app.js
-│       │   ├── index.html
-│       │   ├── logo.svg
-│       │   └── style.css
-│       ├── install.bat
-│       ├── logo.ico
-│       ├── logo.svg
-│       ├── main.js
-│       ├── package-lock.json
-│       ├── package.json
-│       └── preload.js
 ├── frontend/
 │   ├── app/
+│   │   ├── (dashboard)/
+│   │   │   ├── categories/
+│   │   │   │   └── page.tsx
+│   │   │   ├── history/
+│   │   │   │   └── page.tsx
+│   │   │   ├── liked/
+│   │   │   │   └── page.tsx
+│   │   │   ├── playlists/
+│   │   │   │   └── page.tsx
+│   │   │   ├── settings/
+│   │   │   │   └── page.tsx
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
 │   │   ├── media/
 │   │   │   └── [id]/
 │   │   │       └── page.tsx
-│   │   ├── favicon.ico
 │   │   ├── globals.css
-│   │   ├── layout.tsx
-│   │   └── page.tsx
+│   │   └── layout.tsx
 │   ├── components/
 │   │   ├── UI/
-│   │   │   ├── MediaCard.tsx
-│   │   │   ├── MediaPlayerControls.tsx
-│   │   │   └── SearchBar.tsx
+│   │   │   └── MediaCard.tsx
 │   │   └── layout/
-│   │       ├── Footer.tsx
 │   │       ├── Navbar.tsx
 │   │       └── Sidebar.tsx
 │   ├── constants/
 │   │   ├── filters.ts
 │   │   └── mockData.ts
 │   ├── lib/
-│   │   └── api-client.ts
+│   │   ├── api-client.ts
+│   │   └── thumbnail.ts
 │   ├── public/
 │   │   └── logo.svg
 │   ├── types/
 │   │   └── media.ts
+│   ├── Project Structure.md
 │   ├── README.md
 │   ├── next.config.ts
 │   ├── package-lock.json
@@ -62,6 +60,7 @@ m106-media-project/
 │   ├── tailwind.config.ts
 │   └── tsconfig.json
 ├── Aufgabe.pdf
+├── Issues.md
 ├── LICENSE
 ├── Project Structure.md
 ├── deploy.ps1
