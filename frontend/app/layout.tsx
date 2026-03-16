@@ -1,18 +1,12 @@
 import type { Metadata } from "next";
-import { Lato } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-
-const lato = Lato({
-  weight: ["300", "400", "700", "900"],
-  subsets: ["latin"],
-  variable: "--font-lato",
-});
 
 export const metadata: Metadata = {
-  title: "MediaHub - Professionelles Medienportal",
-  description: "Bilder, Videos und Audioaufnahmen mühelos durchsuchen.",
+  title: "MyLights",
+  description: "MyLights - Media Hub",
+  icons: {
+    icon: "/logo.svg"
+  },
 };
 
 export default function RootLayout({
@@ -22,15 +16,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="de">
-      <body
-        className={`${lato.variable} font-sans antialiased bg-background text-primary-text min-h-screen flex flex-col`}
-      >
-        <Navbar />
-        <main className="flex-1 flex flex-col md:flex-row">
-          {children}
-        </main>
-        <Footer />
-      </body>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body>{children}</body>
     </html>
   );
 }

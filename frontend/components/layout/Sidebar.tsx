@@ -1,68 +1,93 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
-import { FILTER_CATEGORIES } from '../../constants/filters';
+import { 
+  Home, 
+  Heart, 
+  History, 
+  ListMusic, 
+  LayoutGrid, 
+  Settings, 
+  Plus 
+} from 'lucide-react';
 
-const Sidebar = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+interface SidebarProps {
+  activeView: string;
+  onViewChange: (view: string) => void;
+  categories: string[];
+  activeCategory: string;
+  onCategoryChange: (cat: string) => void;
+  isCollapsed: boolean;
+}
 
-  const handleFilterChange = (title: string, option: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-
-    if (title === 'Medientyp') {
-      const currentType = params.get('type');
-      if (currentType === option) {
-        params.delete('type'); // Toggle off if already selected
-      } else {
-        params.set('type', option); // Set specific type (Foto, Video, Sound)
-      }
-    } else if (title === 'Kategorie') {
-      const currentQ = params.get('q');
-      if (currentQ === option) {
-        params.delete('q'); // Toggle off if already selected
-      } else {
-        params.set('q', option); // Set specific category as a simple query
-      }
-    }
-
-    router.push(`/?${params.toString()}`);
-  };
+const Sidebar = ({ 
+  activeView, 
+  onViewChange, 
+  categories, 
+  activeCategory, 
+  onCategoryChange,
+  isCollapsed 
+}: SidebarProps) => {
+  
+  const navItems = [
+    { id: 'home', label: 'Home', icon: Home },
+    { id: 'liked', label: 'Favoriten', icon: Heart },
+    { id: 'history', label: 'Verlauf', icon: History },
+    { id: 'playlists', label: 'Playlists', icon: ListMusic },
+    { id: 'categories', label: 'Kategorien', icon: LayoutGrid },
+    { id: 'settings', label: 'Einstellungen', icon: Settings },
+  ];
 
   return (
-    <aside className="layout-sidebar">
-      <div className="space-y-8">
-        {FILTER_CATEGORIES.map((category) => (
-          <div key={category.title} className="space-y-4">
-            <h3 className="filter-category-title">
-              {category.title}
-            </h3>
-            <div className="space-y-2">
-              {category.options.map((option) => {
-                const isSelected = 
-                  (category.title === 'Medientyp' && searchParams.get('type') === option) ||
-                  (category.title === 'Kategorie' && searchParams.get('q') === option);
-
-                return (
-                  <label
-                    key={option}
-                    className="filter-checkbox-label"
-                  >
-                    <input
-                      type="checkbox"
-                      checked={isSelected}
-                      onChange={() => handleFilterChange(category.title, option)}
-                      className="filter-checkbox-input"
-                    />
-                    <span className={isSelected ? 'text-primary-accent' : ''}>
-                      {option}
-                    </span>
-                  </label>
-                );
-              })}
+    <aside id="sidebar" className={isCollapsed ? 'col' : ''}>
+      <div className="ss">
+        <div className="ss-title">Navigation</div>
+        {navItems.map((item) => (
+          <div 
+            key={item.id}
+            className={`si ${activeView === item.id ? 'active' : ''}`}
+            id={`nav-${item.id}`}
+            onClick={() => onViewChange(item.id)}
+          >
+            <div className="si-ico">
+              <item.icon className="w-5 h-5" />
             </div>
+            <span className="si-lbl">{item.label}</span>
           </div>
         ))}
+      </div>
+
+      {activeView === 'home' && (
+        <div className="ss" id="cat-section">
+          <div className="ss-title">Kategorien</div>
+          <div id="cat-list">
+            <div 
+              className={`cat-pill ${activeCategory === '' ? 'active' : ''}`} 
+              onClick={() => onCategoryChange('')}
+            >
+              <span className="cat-pill-name">Alle Videos</span>
+            </div>
+            {categories.map(cat => (
+              <div 
+                key={cat}
+                className={`cat-pill ${activeCategory === cat ? 'active' : ''}`}
+                onClick={() => onCategoryChange(cat)}
+              >
+                <span className="cat-pill-name">{cat}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div style={{ padding: '12px 10px 20px' }}>
+        <button 
+          className="btn red" 
+          style={{ width: '100%', justifyContent: 'center' }}
+          onClick={() => alert('Funktion "Ordner hinzufügen" ist in Vorbereitung.')}
+        >
+          <Plus className="w-[15px] h-[15px]" />
+          <span className="si-lbl">Ordner hinzufügen</span>
+        </button>
       </div>
     </aside>
   );
