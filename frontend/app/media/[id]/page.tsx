@@ -1,8 +1,23 @@
 import { searchMedia } from '@/lib/api-client';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronLeft, Calendar, Tag, Share2, MoreVertical } from 'lucide-react';
-import MediaPlayerControls from '@/components/UI/MediaPlayerControls';
+import { 
+  ChevronLeft, 
+  ChevronRight,
+  X,
+  Maximize2,
+  Minimize2,
+  Heart,
+  Share2,
+  MoreVertical,
+  FolderOpen,
+  ExternalLink,
+  Trash2,
+  Scissors,
+  Zap,
+  Tag,
+  Calendar
+} from 'lucide-react';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -11,9 +26,6 @@ interface PageProps {
 export default async function MediaPage({ params }: PageProps) {
   const { id } = await params;
   
-  // Since we don't have a single-item endpoint, we'll use our search results 
-  // and filter for the specific ID. In a real-world app, a dedicated 
-  // detail endpoint like getMediaById.php?id=X would be more efficient.
   const mediaList = await searchMedia();
   const media = mediaList.find((item) => item.id === id);
 
@@ -28,116 +40,150 @@ export default async function MediaPage({ params }: PageProps) {
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-background min-h-0">
-      {/* Kopfzeile / Zurück-Button */}
-      <div className="p-4 border-b border-white/5 flex items-center gap-4 bg-primary-black/40">
-        <Link 
-          href="/" 
-          className="p-2 rounded-full hover:bg-white/5 transition-colors text-primary-text"
-        >
-          <ChevronLeft className="w-6 h-6" />
-        </Link>
-        <div>
-          <h1 className="text-sm font-medium text-primary-white truncate max-w-md">
-            {media.title}
-          </h1>
-          <p className="text-[10px] text-primary-text/40">Zurück zur Übersicht</p>
-        </div>
-      </div>
-
-      {/* Hauptbereich */}
-      <div className="flex-1 flex flex-col xl:flex-row overflow-hidden">
-        {/* Player-Bereich */}
-        <div className="flex-1 flex flex-col bg-background relative">
-          <div className="flex-1 flex items-center justify-center p-4 lg:p-8">
-            <div className="w-full max-w-5xl aspect-video bg-gray-900 rounded-lg overflow-hidden shadow-2xl relative group">
-              {media.type === 'image' ? (
-                <img 
-                  src={media.url} 
-                  className="w-full h-full object-contain"
-                  alt={media.title}
-                />
-              ) : media.type === 'video' ? (
-                <video 
+    <div className="fixed inset-0 bg-black/92 backdrop-blur-xl z-[500] flex items-center justify-center p-4 sm:p-5 overflow-y-auto font-outfit">
+      <div className="w-full max-w-[1260px] flex flex-col md:flex-row bg-bg1 border border-line2 rounded-2xl overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200 max-h-[calc(100vh-40px)]">
+        
+        {/* Left Section: Player */}
+        <div className="flex-1 flex flex-col min-w-0 overflow-y-auto bg-black">
+          <div className="relative aspect-video bg-black flex items-center justify-center group">
+            {media.type === 'image' ? (
+              <img 
+                src={media.url} 
+                className="w-full h-full object-contain"
+                alt={media.title}
+              />
+            ) : media.type === 'video' ? (
+              <video 
+                src={media.url} 
+                controls 
+                autoPlay
+                className="w-full h-full outline-none"
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-bg2">
+                <audio 
                   src={media.url} 
                   controls 
-                  className="w-full h-full"
+                  className="w-3/4 h-10 accent-red"
                 />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center bg-gray-800">
-                  <audio 
-                    src={media.url} 
-                    controls 
-                    className="w-3/4"
-                  />
-                </div>
-              )}
-              
-              {/* Typ-Anzeige */}
-              <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-background/60 backdrop-blur-md border border-white/10 text-xs font-medium text-primary-accent uppercase tracking-widest">
-                {typeLabels[media.type] || media.type}
-              </div>
-            </div>
-          </div>
-
-          {/* Steuerung - Nur für Video/Audio (Mock Controls for visual) */}
-          {media.type !== 'image' && (
-            <MediaPlayerControls type={media.type as any} duration={media.duration} />
-          )}
-        </div>
-
-        {/* Info-Seitenleiste */}
-        <div className="w-full xl:w-[400px] border-l border-white/5 bg-primary-black/20 p-6 overflow-y-auto">
-          <div className="flex justify-between items-start mb-6">
-            <h2 className="text-xl font-bold text-primary-white leading-tight">
-              {media.title}
-            </h2>
-            <div className="flex gap-2">
-              <button className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
-                <Share2 className="w-5 h-5 text-primary-text" />
-              </button>
-              <button className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
-                <MoreVertical className="w-5 h-5 text-primary-text" />
-              </button>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap gap-4 mb-8">
-            <div className="flex items-center gap-2 text-xs text-primary-text/60 bg-white/5 px-3 py-1.5 rounded-full">
-              <Tag className="w-3.5 h-3.5 text-primary-brand" />
-              {media.signature || 'Ohne Kategorie'}
-            </div>
-            {media.uploadDate && (
-              <div className="flex items-center gap-2 text-xs text-primary-text/60 bg-white/5 px-3 py-1.5 rounded-full">
-                <Calendar className="w-3.5 h-3.5 text-primary-accent" />
-                {new Date(media.uploadDate).toLocaleDateString('de-DE')}
               </div>
             )}
+
+            {/* Top Buttons (Floating) */}
+            <div className="absolute top-3 right-3 z-20 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+              <button className="w-9 h-9 rounded-full bg-black/70 flex items-center justify-center text-white backdrop-blur-md border border-white/10 hover:bg-red transition-colors">
+                <Scissors className="w-4 h-4" />
+              </button>
+            </div>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-primary-text/40">
-              Beschreibung
-            </h3>
-            <p className="text-sm text-primary-text/80 leading-relaxed bg-white/5 p-4 rounded-xl border border-white/5">
-              {media.description || "Keine Beschreibung verfügbar."}
-            </p>
-          </div>
-
-          <div className="mt-8 pt-8 border-t border-white/5">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-primary-text/40 mb-4">
-              Metadaten
-            </h3>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="p-3 rounded-lg bg-white/5">
-                <div className="text-[10px] text-primary-text/40 mb-1">Typ</div>
-                <div className="text-sm text-primary-white font-medium capitalize">
-                  {typeLabels[media.type] || media.type}
+          <div className="p-5 md:p-6 bg-bg1 flex-1">
+             <div className="flex items-center gap-2.5 text-text3 text-[0.82rem] mb-3 pb-3 border-b border-line flex-wrap">
+                <span className="bg-bg3 text-text2 px-2.5 py-0.5 rounded font-semibold text-[0.78rem]">
+                  {typeLabels[media.type as keyof typeof typeLabels] || media.type}
+                </span>
+                <span className="w-1 h-1 rounded-full bg-bg4" />
+                <div className="flex items-center gap-1.5">
+                  <Tag className="w-3.5 h-3.5 text-red" />
+                  <span className="text-red font-medium">{media.signature || 'Allgemein'}</span>
                 </div>
+                {media.uploadDate && (
+                  <>
+                    <span className="w-1 h-1 rounded-full bg-bg4" />
+                    <div className="flex items-center gap-1.5">
+                      <Calendar className="w-3.5 h-3.5" />
+                      <span>{new Date(media.uploadDate).toLocaleDateString('de-DE')}</span>
+                    </div>
+                  </>
+                )}
+             </div>
+
+             <h1 className="text-xl font-bold text-text leading-[1.35] mb-4">
+               {media.title}
+             </h1>
+
+             {media.description && (
+               <div className="p-4 bg-bg2 border border-line rounded-xl text-[0.875rem] leading-[1.65] text-text2">
+                 {media.description}
+               </div>
+             )}
+          </div>
+        </div>
+
+        {/* Right Section: Actions & Info */}
+        <div className="w-full md:w-[320px] shrink-0 flex flex-col border-l border-line bg-bg2 overflow-y-auto">
+          <div className="flex items-center justify-between p-3 border-b border-line sticky top-0 bg-bg2 z-10">
+             <div className="flex gap-1">
+                <button className="w-8 h-8 rounded-lg border border-line2 bg-bg3 text-text2 flex items-center justify-center hover:bg-bg4 hover:text-text disabled:opacity-30">
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <button className="w-8 h-8 rounded-lg border border-line2 bg-bg3 text-text2 flex items-center justify-center hover:bg-bg4 hover:text-text disabled:opacity-30">
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+             </div>
+             <div className="flex gap-1">
+                <Link 
+                  href="/"
+                  className="w-8 h-8 rounded-lg bg-bg3 text-text3 flex items-center justify-center hover:bg-red hover:text-white transition-colors"
+                >
+                  <X className="w-4 h-4" />
+                </Link>
+             </div>
+          </div>
+
+          <div className="p-4">
+             <h2 className="text-sm font-bold text-text3 uppercase tracking-wider mb-3">Aktionen</h2>
+             <div className="flex flex-col gap-1">
+                <button className="flex items-center gap-3 p-2.5 rounded-lg text-text2 font-semibold text-[0.85rem] hover:bg-bg3 hover:text-text transition-colors text-left group">
+                  <div className="w-8 h-8 rounded-lg bg-bg3 flex items-center justify-center shrink-0 group-hover:bg-bg4">
+                    <Heart className="w-4 h-4" />
+                  </div>
+                  <span>Zu Favoriten hinzufügen</span>
+                </button>
+                <button className="flex items-center gap-3 p-2.5 rounded-lg text-text2 font-semibold text-[0.85rem] hover:bg-bg3 hover:text-text transition-colors text-left group">
+                  <div className="w-8 h-8 rounded-lg bg-bg3 flex items-center justify-center shrink-0 group-hover:bg-bg4">
+                    <FolderOpen className="w-4 h-4" />
+                  </div>
+                  <span>In Ordner anzeigen</span>
+                </button>
+                <button className="flex items-center gap-3 p-2.5 rounded-lg text-text2 font-semibold text-[0.85rem] hover:bg-bg3 hover:text-text transition-colors text-left group">
+                  <div className="w-8 h-8 rounded-lg bg-bg3 flex items-center justify-center shrink-0 group-hover:bg-bg4">
+                    <ExternalLink className="w-4 h-4" />
+                  </div>
+                  <span>Mit App öffnen</span>
+                </button>
+                <button className="flex items-center gap-3 p-2.5 rounded-lg text-text2 font-semibold text-[0.85rem] hover:bg-bg3 hover:text-text transition-colors text-left group">
+                  <div className="w-8 h-8 rounded-lg bg-bg3 flex items-center justify-center shrink-0 group-hover:bg-bg4">
+                    <Scissors className="w-4 h-4" />
+                  </div>
+                  <span>Video trimmen</span>
+                </button>
+                <button className="flex items-center gap-3 p-2.5 rounded-lg text-text2 font-semibold text-[0.85rem] hover:bg-bg3 hover:text-text transition-colors text-left group">
+                  <div className="w-8 h-8 rounded-lg bg-bg3 flex items-center justify-center shrink-0 group-hover:bg-bg4 text-red">
+                    <Zap className="w-4 h-4" />
+                  </div>
+                  <span className="text-red">Komprimieren</span>
+                </button>
+                <div className="h-px bg-line my-1" />
+                <button className="flex items-center gap-3 p-2.5 rounded-lg text-red font-semibold text-[0.85rem] hover:bg-red/10 transition-colors text-left group">
+                  <div className="w-8 h-8 rounded-lg bg-bg3 flex items-center justify-center shrink-0 group-hover:bg-red/20 text-red">
+                    <Trash2 className="w-4 h-4" />
+                  </div>
+                  <span>Löschen</span>
+                </button>
+             </div>
+          </div>
+
+          <div className="mt-auto p-4 border-t border-line">
+            <h2 className="text-[0.72rem] font-bold text-text3 uppercase tracking-wider mb-3">Datei-Details</h2>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="p-2.5 rounded-lg bg-bg3">
+                <div className="text-[0.65rem] text-text3 uppercase font-bold mb-0.5">Format</div>
+                <div className="text-[0.82rem] text-text font-semibold uppercase">{media.url.split('.').pop()}</div>
               </div>
-              <div className="p-3 rounded-lg bg-white/5">
-                <div className="text-[10px] text-primary-text/40 mb-1">Dauer</div>
-                <div className="text-sm text-primary-white font-medium">{media.duration || "N/A"}</div>
+              <div className="p-2.5 rounded-lg bg-bg3">
+                <div className="text-[0.65rem] text-text3 uppercase font-bold mb-0.5">Dauer</div>
+                <div className="text-[0.82rem] text-text font-semibold">{media.duration || '—'}</div>
               </div>
             </div>
           </div>
