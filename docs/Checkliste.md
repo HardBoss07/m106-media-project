@@ -5,9 +5,9 @@
 - [x] **Mediendatenbank (MySQL):** Erstellung einer Datenbank, die in die Kategorien Foto, Video und Sound gegliedert ist.
 - [x] **Strukturierung/Signatur:** Medien müssen mit aussagekräftigen Signaturen (z. B. Heilkunde → Natur Kräuter → Kopfschmerzen) versehen werden.
 - [x] **Web-Interface:** Realisierung einer Webseite (Media-Host) mit einer effektiven Suchfunktion für die Medieninhalte.
-- [ ] **Abfragen & Aggregatsfunktionen:** Die bestehenden Datenbankabfragen müssen um sinnvolle Aggregatsfunktionen erweitert werden (z. B. COUNT, SUM, AVG zur statistischen Auswertung der Medienbestände).
+- [x] **Abfragen & Aggregatsfunktionen:** Die bestehenden Datenbankabfragen müssen um sinnvolle Aggregatsfunktionen erweitert werden (z. B. COUNT, SUM, AVG zur statistischen Auswertung der Medienbestände).
 - [x] **Datentransfer:** Einrichtung des Datentransfers zwischen dem lokalen MySQL-Server und dem Webserver (Green.ch), sowohl intern/extern als auch offline via FTP.
-- [ ] **Betriebssicherheit:** Implementierung eines Backups und Durchführung eines Performancetests.
+- [x] **Betriebssicherheit:** Implementierung eines Backups und Durchführung eines Performancetests.
 
 ## 2. Benutzerverwaltung & Rechte-Matrix (DCL)
 

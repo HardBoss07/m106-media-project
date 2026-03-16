@@ -262,16 +262,23 @@ body {
 
 /* ── STATS ── */
 .stats-row {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(130px,1fr));
-  gap: 12px; margin-bottom: 28px
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(clamp(140px, 15vw, 200px), 1fr));
+  gap: clamp(8px, 1.5vw, 16px);
+  margin-bottom: clamp(20px, 4vw, 32px);
+  width: 100%;
 }
 .stat-tile {
   background: var(--bg2); border: 1px solid var(--line);
-  border-radius: var(--rm); padding: 16px 18px;
+  border-radius: var(--rm); padding: clamp(12px, 2vw, 20px);
   position: relative; overflow: hidden;
-  transition: border-color .2s, transform .2s
+  transition: border-color .2s, transform .2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0; /* Prevents overflow in grid items */
 }
-.stat-tile:hover { border-color: var(--line2); transform: translateY(-1px) }
+.stat-tile:hover { border-color: var(--line2); transform: translateY(-1.5px) }
 .stat-tile.clickable { cursor: pointer }
 .stat-tile.clickable:hover { border-color: var(--red) }
 .stat-tile::before {
@@ -280,8 +287,33 @@ body {
   opacity: 0; transition: opacity .2s
 }
 .stat-tile:hover::before { opacity: 1 }
-.stat-val { font-family: 'JetBrains Mono', monospace; font-size: 1.6rem; font-weight: 700; color: var(--text); line-height: 1; margin-bottom: 4px }
-.stat-lbl { font-size: .72rem; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: .06em }
+.stat-val { 
+  font-family: 'JetBrains Mono', monospace; 
+  font-size: clamp(1.2rem, 2.5vw, 1.7rem); 
+  font-weight: 700; 
+  color: var(--text); 
+  line-height: 1.1; 
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.stat-lbl { 
+  font-size: clamp(0.65rem, 1vw, 0.75rem); 
+  font-weight: 600; 
+  color: var(--text3); 
+  text-transform: uppercase; 
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.stat-lbl svg {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+}
 
 /* ── PAGE ── */
 .page { padding: 24px; display: none }

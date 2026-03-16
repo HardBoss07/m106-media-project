@@ -2,9 +2,9 @@
 
 import { useState, useEffect, Suspense, useCallback } from 'react';
 import MediaCard from '@/components/UI/MediaCard';
-import { searchMedia } from '@/lib/api-client';
+import { searchMedia, getStats, StatsData } from '@/lib/api-client';
 import { MediaItem } from '@/types/media';
-import { Video, Image, Volume2, Heart, ListMusic, Settings, Search, Info, Folder, LayoutGrid, Clock, Play } from 'lucide-react';
+import { Video, Image, Volume2, Heart, ListMusic, Settings, Search, Info, Folder, LayoutGrid, Clock, Play, Database } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 
 function HomeContent() {
@@ -12,7 +12,7 @@ function HomeContent() {
   const searchQuery = searchParams.get('q') || '';
   const activeCategory = searchParams.get('cat') || '';
   
-  const [mediaType, setMediaType] = useState('video');
+  const [mediaType, setMediaType] = useState('image');
   const [mediaList, setMediaList] = useState<MediaItem[]>([]);
   const [playerOpen, setPlayerOpen] = useState(false);
   const [curMedia, setCurMedia] = useState<MediaItem | null>(null);
@@ -27,33 +27,34 @@ function HomeContent() {
     liked: 0,
     playlists: 0,
     categories: 0,
+    totalSize: 0,
     folders: 1
   });
 
   const categories = ['Allgemein', 'Natur', 'Technik', 'Menschen'];
 
   const updateStats = useCallback(async () => {
-    const finalQuery = activeCategory ? activeCategory : searchQuery;
+    // 1. Get database stats from API
+    const dbStats = await getStats();
     
-    // Fetch counts based on current search/category
-    const v = await searchMedia(finalQuery, 'Video');
-    const i = await searchMedia(finalQuery, 'Foto');
-    const s = await searchMedia(finalQuery, 'Sound');
-    
-    // Get liked count from localStorage
+    // 2. Get liked count from localStorage
     const savedLiked = localStorage.getItem('liked_media');
     const likedArr = savedLiked ? JSON.parse(savedLiked) : [];
 
-    setStats(prev => ({
-      ...prev,
-      videos: v.length,
-      images: i.length,
-      sounds: s.length,
-      total: v.length + i.length + s.length,
-      liked: likedArr.length,
-      categories: categories.length
-    }));
-  }, [searchQuery, activeCategory]);
+    if (dbStats) {
+      setStats({
+        videos: dbStats.by_type.video || 0,
+        images: dbStats.by_type.image || 0,
+        sounds: dbStats.by_type.audio || 0,
+        total: dbStats.total_media,
+        liked: likedArr.length,
+        playlists: 0,
+        categories: categories.length,
+        totalSize: dbStats.total_size_mb,
+        folders: 1
+      });
+    }
+  }, []);
 
   const fetchMedia = useCallback(async () => {
     setLoading(true);
@@ -115,18 +116,18 @@ function HomeContent() {
       {/* Media type tabs */}
       <div className="mtype-bar">
         <button 
-          className={`mtype-tab ${mediaType === 'video' ? 'active' : ''}`} 
-          onClick={() => setMediaType('video')}
-        >
-          <Video className="w-[17px] h-[17px]" />
-          Videos <span className="mtcnt">{stats.videos}</span>
-        </button>
-        <button 
           className={`mtype-tab ${mediaType === 'image' ? 'active' : ''}`} 
           onClick={() => setMediaType('image')}
         >
           <Image className="w-[17px] h-[17px]" />
           Bilder <span className="mtcnt">{stats.images}</span>
+        </button>
+        <button 
+          className={`mtype-tab ${mediaType === 'video' ? 'active' : ''}`} 
+          onClick={() => setMediaType('video')}
+        >
+          <Video className="w-[17px] h-[17px]" />
+          Videos <span className="mtcnt">{stats.videos}</span>
         </button>
         <button 
           className={`mtype-tab ${mediaType === 'sound' ? 'active' : ''}`} 
@@ -146,31 +147,35 @@ function HomeContent() {
 
       <div style={{ padding: '20px 24px 60px' }}>
         {/* Stats row */}
-        {mediaType === 'video' && !searchQuery && !activeCategory && (
+        {mediaType === 'image' && !searchQuery && !activeCategory && (
           <div id="stats-row" className="stats-row">
             <div className="stat-tile">
               <div className="stat-val">{stats.videos}</div>
-              <div className="stat-lbl flex items-center gap-1"><Video className="w-3 h-3" /> Videos</div>
+              <div className="stat-lbl"><Video /> Videos</div>
             </div>
             <div className="stat-tile">
               <div className="stat-val">{stats.total}</div>
-              <div className="stat-lbl flex items-center gap-1"><Info className="w-3 h-3" /> Gesamt</div>
+              <div className="stat-lbl"><Info /> Gesamt</div>
+            </div>
+            <div className="stat-tile">
+              <div className="stat-val">{stats.totalSize} MB</div>
+              <div className="stat-lbl"><Database /> Speicher</div>
             </div>
             <div className="stat-tile clickable">
               <div className="stat-val">{stats.liked}</div>
-              <div className="stat-lbl flex items-center gap-1"><Heart className="w-3 h-3" /> Favoriten</div>
+              <div className="stat-lbl"><Heart /> Favoriten</div>
             </div>
             <div className="stat-tile clickable">
               <div className="stat-val">{stats.playlists}</div>
-              <div className="stat-lbl flex items-center gap-1"><ListMusic className="w-3 h-3" /> Playlists</div>
+              <div className="stat-lbl"><ListMusic /> Playlists</div>
             </div>
             <div className="stat-tile clickable">
               <div className="stat-val">{stats.categories}</div>
-              <div className="stat-lbl flex items-center gap-1"><LayoutGrid className="w-3 h-3" /> Kategorien</div>
+              <div className="stat-lbl"><LayoutGrid /> Kategorien</div>
             </div>
             <div className="stat-tile clickable">
               <div className="stat-val">{stats.folders}</div>
-              <div className="stat-lbl flex items-center gap-1"><Folder className="w-3 h-3" /> Ordner</div>
+              <div className="stat-lbl"><Folder /> Ordner</div>
             </div>
           </div>
         )}
