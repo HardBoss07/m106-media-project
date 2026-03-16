@@ -1,12 +1,12 @@
 <?php
-header("Access-Control-Allow-Origin: http://localhost:4000");
+header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET");
 header("Content-Type: application/json; charset=UTF-8");
 
 require_once '../config/db.php';
 
 $type = isset($_GET['type']) ? $_GET['type'] : '';
-$query = isset($_GET['query']) ? $_GET['query'] : '';
+$query = isset($_GET['query']) ? trim($_GET['query']) : '';
 
 // Map localized types to database names
 $type_map = [
