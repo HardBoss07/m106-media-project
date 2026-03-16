@@ -13,6 +13,20 @@ m106-media-project/
 │   └── mock_data.sql
 ├── docs/
 │   └── index.md
+├── electron-app/
+│   └── MyLights/
+│       ├── renderer/
+│       │   ├── app.js
+│       │   ├── index.html
+│       │   ├── logo.svg
+│       │   └── style.css
+│       ├── install.bat
+│       ├── logo.ico
+│       ├── logo.svg
+│       ├── main.js
+│       ├── package-lock.json
+│       ├── package.json
+│       └── preload.js
 ├── frontend/
 │   ├── app/
 │   │   ├── media/
