@@ -29,7 +29,6 @@ Die Bewertung erfolgt zu gleichen Teilen (je 50%) über den Bericht und die Prä
 - [ ] **Präsentation:**
 - [ ] Maximal 10 Seiten Umfang.
 - [ ] Inklusive einer technischen Vorführung des Projekts.
-- [ ] **Video:** Die Präsentation soll als Video eingereicht werden.
 
 ## 4. SQL-Kompetenzen (für die Abfragen im Projekt)
 
