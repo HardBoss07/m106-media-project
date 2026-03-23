@@ -142,7 +142,7 @@ function HomeContent() {
       <div id="chips" className="chips">
         <div className="chip active">Neueste</div>
         <button className="chip">Name</button>
-        <button className="chip">Größe</button>
+        <button className="chip">Grösse</button>
       </div>
 
       <div style={{ padding: '20px 24px 60px' }}>
