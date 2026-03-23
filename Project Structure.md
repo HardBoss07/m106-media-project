@@ -59,7 +59,6 @@ m106-media-project/
 │   ├── package-lock.json
 │   ├── package.json
 │   ├── postcss.config.mjs
-│   ├── tailwind.config.ts
 │   └── tsconfig.json
 ├── Aufgabe.pdf
 ├── Issues.md
